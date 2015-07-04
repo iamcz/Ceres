@@ -3,8 +3,9 @@
     window.Ceres = {};
   }
 
-  var Obj = Ceres.Obj = function (points) {
+  var Obj = Ceres.Obj = function (points, vel) {
     this.points = points;
+    this.vel = vel || [0, 0];
   };
 
   Obj.Random = function (xCenter, yCenter, r, n) {
@@ -27,4 +28,10 @@
 
     return new Obj(points);
   };
+
+  Obj.prototype.move = function () {
+    this.points = this.points.map( function (point) {
+      return point.plus(this.vel);
+    }.bind(this));
+  }
 })();
