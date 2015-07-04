@@ -5,5 +5,6 @@
 
   var Game = Ceres.Game = function (canvas) {
     this.view = new Ceres.View(canvas);
+    this.asteroids = [];
   };
 })();
