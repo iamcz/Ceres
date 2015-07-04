@@ -22,4 +22,23 @@
   View.prototype.getWidth = function () {
     return this.canvas.width;
   };
+
+  View.prototype.render = function (obj) {
+    var ctx = this.canvas.getContext('2d'),
+        firstPoint = obj.points[0];
+
+    ctx.fillStyle = obj.fill;
+    ctx.strokeStyle = obj.stroke;
+    ctx.beginPath();
+
+    ctx.moveTo.apply(ctx, firstPoint);
+    obj.points.slice(1).forEach(function (point) {
+      ctx.lineTo.apply(ctx, point);
+    })
+    ctx.lineTo.apply(ctx, firstPoint);
+    
+    if (obj.fill) ctx.fill();
+    if (obj.stroke) ctx.stroke();
+    ctx.closePath();
+  };
 })();
