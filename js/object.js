@@ -8,7 +8,7 @@
     this.vel = vel || [0, 0];
   };
 
-  Obj.Random = function (xCenter, yCenter, r, n) {
+  Obj.randomPoints = function (xCenter, yCenter, r, n) {
     var dTheta = 2 * Math.PI / n, 
         minTheta = 0,
         dRad = 0.1,
@@ -26,7 +26,7 @@
       minTheta += dTheta;
     }
 
-    return new Obj(points);
+    return points;
   };
 
   Obj.prototype.move = function () {
