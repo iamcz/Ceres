@@ -11,12 +11,16 @@
     this.start();
   };
 
+  Game.prototype.size = function () {
+    return this.view.getSize();
+  };
+
   Game.prototype.setup = function () {
     var i;
     var bounds = this.view.getSize();
 
     for (i = 0; i < 3; i += 1) {
-      this.asteroids.push(new Ceres.Asteroid.Random(bounds, 25));
+      this.asteroids.push(Ceres.Asteroid.Random(bounds, 25, this));
     }
   };
 
