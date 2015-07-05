@@ -15,13 +15,18 @@
     this.canvas.width = parentContainer.clientWidth;
   };
 
-  View.prototype.getHeight = function () {
-    return this.canvas.height;
+  View.prototype.getSize = function () {
+    return [
+      this.canvas.width,
+      this.canvas.height
+    ];
   };
 
-  View.prototype.getWidth = function () {
-    return this.canvas.width;
-  };
+  View.prototype.clear = function () {
+    var bounds = this.getSize(), ctx = this.canvas.getContext('2d');
+    ctx.clearRect(0, 0, bounds[0], bounds[1]);
+  }
+
 
   View.prototype.render = function (obj) {
     var ctx = this.canvas.getContext('2d'),
