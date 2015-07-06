@@ -19,13 +19,14 @@
     var i;
     var bounds = this.view.getSize();
 
-    for (i = 0; i < 3; i += 1) {
+    for (i = 0; i < 25; i += 1) {
       this.asteroids.push(Ceres.Asteroid.Random(bounds, 25, this));
     }
   };
 
   Game.prototype.start = function () {
     setInterval( function () {
+      this.view.updateSize();
       this.renderAll();
       this.moveAll();
     }.bind(this), 1000 / 60);

@@ -83,4 +83,23 @@
       this.shift([0, -bounds[1]]);
     }
   };
+
+  Obj.prototype.prewrap = function () {
+    var bounds = this.game.size();
+    var newObj = new Obj(this.points, this.vel, this.game);
+
+    if (this.left() < 0) {
+      newObj.shift([bounds[0], 0]);
+    } else if (this.right() > bounds[0]) {
+      newObj.shift([-bounds[0], 0]);
+    } else if (this.bottom() < 0) {
+      newObj.shift([0, bounds[1]]);
+    } else if (this.top() > bounds[1]) {
+      newObj.shift([0, -bounds[1]]);
+    } else {
+      return;
+    }
+
+    return newObj;
+  };
 })();

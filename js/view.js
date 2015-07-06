@@ -25,10 +25,19 @@
   View.prototype.clear = function () {
     var bounds = this.getSize(), ctx = this.canvas.getContext('2d');
     ctx.clearRect(0, 0, bounds[0], bounds[1]);
-  }
-
+  };
 
   View.prototype.render = function (obj) {
+    this.draw(obj)
+    var prewrap = obj.prewrap();
+    if (prewrap) {
+      prewrap.fill = obj.fill;
+      prewrap.stroke = obj.stroke;
+      this.draw(prewrap);
+    }
+  };
+
+  View.prototype.draw = function (obj) {
     var ctx = this.canvas.getContext('2d'),
         firstPoint = obj.points[0];
 
@@ -45,5 +54,7 @@
     if (obj.fill) ctx.fill();
     if (obj.stroke) ctx.stroke();
     ctx.closePath();
-  };
+  }
+
+
 })();
