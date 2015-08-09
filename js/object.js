@@ -5,6 +5,7 @@
 
   var Obj = Ceres.Obj = function (points, vel, game) {
     this.points = points;
+    // this.center = center;
     this.vel = vel || [0, 0];
     this.game = game;
     this.wrappable = true;
@@ -64,6 +65,10 @@
     this.points = this.points.map( function (point) {
       return point.plus(diff);
     }.bind(this));
+  };
+
+  Obj.prototype.rotate = function (angle) {
+
   };
 
   Obj.prototype.wrap = function () {

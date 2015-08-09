@@ -49,7 +49,6 @@
     obj.points.slice(1).forEach(function (point) {
       ctx.lineTo.apply(ctx, point);
     });
-    //ctx.lineTo.apply(ctx, firstPoint);
     ctx.closePath();
     
     if (obj.fill) ctx.fill();
