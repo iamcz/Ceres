@@ -31,7 +31,7 @@
   };
 
   Array.prototype.overlap = function(interval) {
-    if this.overlaps(interval) {
+    if (this.overlaps(interval)) {
       return [
         Math.max(this[0], interval[0]),
         Math.min(this[1], interval[1])
