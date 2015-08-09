@@ -29,7 +29,7 @@
   };
 
   Asteroid.numPointsFor = function (rad) {
-    return 3 + Math.random() * Math.floor(rad / 2);
+    return 3 + Math.floor(Math.random() * rad / 2);
   };
 
   Asteroid.velFor = function (rad) {

@@ -25,7 +25,7 @@
 
       points.push([x, y]);
 
-      minTheta += dTheta;
+      minTheta = points.length * 2 * Math.PI / n;
     }
 
     return points;
@@ -37,31 +37,27 @@
   };
 
   Obj.prototype.xVals = function () {
-    return this.points.map ( function (point) {
-      return point[0];
-    });
+    return this.points.map(function (point) { return point[0]; });
   };
 
   Obj.prototype.yVals = function () {
-    return this.points.map ( function (point) {
-      return point[1];
-    });
+    return this.points.map (function (point) { return point[1]; });
   };
 
   Obj.prototype.right = function () {
-    return Math.max.apply(null, this.xVals());
+    return this.xVals().max();
   };
 
   Obj.prototype.left = function () {
-    return Math.min.apply(null, this.xVals());
+    return this.xVals().min();
   };
 
   Obj.prototype.top = function () {
-    return Math.max.apply(null, this.yVals());
+    return this.yVals().max();
   };
 
   Obj.prototype.bottom = function () {
-    return Math.min.apply(null, this.yVals());
+    return this.yVals().min();
   };
 
   Obj.prototype.shift = function (diff) {
@@ -101,5 +97,48 @@
     }
 
     return newObj;
+  };
+
+  Obj.prototype.axes = function (otherObj) {
+    var points = this.points;
+    var pointIdx, fromPoint, toPoint, slope;
+    var axes = [];
+
+    for (pointIdx = 0; pointIdx < points.length; pointIdx += 1) {
+      fromPoint = points[pointIdx];
+      toPoint = points[(pointIdx + 1) % points.length];
+      slope = (toPoint[1] - fromPoint[1]) / (toPoint[0] - fromPoint[0]);
+      axes.push([-slope, 1]);
+    }
+
+    return axes;
+  };
+
+  Obj.prototype.proj = function (vec) {
+    var projPoints = this.points.map(function (point) { 
+      return point.proj(vec); 
+    });
+
+    return [projPoints.min(), projPoints.max()];
+  };
+
+  Obj.prototype.collidesWith = function (otherObj) {
+    if (otherObj === this) return false;
+
+    var axes = this.axes().concat(otherObj.axes());
+    var i, axis, thisProj, otherProj;
+
+    for (i = 0; i < axes.length; i += 1) {
+      axis = axes[i];
+      thisProj = this.proj(axis);
+      otherProj = otherObj.proj(axis);
+
+      if (!thisProj.overlaps(otherProj)) {
+        return false; 
+      } else {
+        
+      }
+    }
+    return true;
   };
 })();
