@@ -7,7 +7,8 @@
     this.view = new Ceres.View(canvas);
     this.asteroids = [];
 
-    this.setup();
+    this.setupAsteroids();
+    this.spawnShip();
     this.start();
   };
 
@@ -15,13 +16,17 @@
     return this.view.getSize();
   };
 
-  Game.prototype.setup = function () {
+  Game.prototype.setupAsteroids = function () {
     var i;
     var bounds = this.view.getSize();
 
     for (i = 0; i < 15; i += 1) {
       this.asteroids.push(Ceres.Asteroid.Random(bounds, 25, this));
     }
+  };
+
+  Game.prototype.spawnShip = function () {
+    this.ship = new Ceres.Ship(this);
   };
 
   Game.prototype.start = function () {
@@ -68,6 +73,6 @@
   };
 
   Game.prototype.allObjects = function () {
-    return this.asteroids;
+    return this.asteroids.concat(this.ship);
   };
 })();

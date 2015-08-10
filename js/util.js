@@ -9,8 +9,18 @@
     });
   };
 
+  Array.prototype.minus = function (otherArr) {
+    return this.map(function (el, idx) {
+      return el - otherArr[idx];
+    });
+  };
+
   Array.prototype.norm = function () {
     return Math.sqrt(this.dot(this));
+  };
+
+  Array.prototype.theta = function () {
+    return Math.atan2(this[1], this[0]);
   };
 
   Array.prototype.dot = function (otherArr) {

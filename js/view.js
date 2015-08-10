@@ -38,6 +38,9 @@
   };
 
   View.prototype.draw = function (obj) {
+    if (obj.fill === undefined) {
+      debugger;
+    }
     var ctx = this.canvas.getContext('2d'),
         firstPoint = obj.points[0];
 

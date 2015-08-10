@@ -3,9 +3,9 @@
     window.Ceres = {};
   }
 
-  var Obj = Ceres.Obj = function (points, vel, game) {
+  var Obj = Ceres.Obj = function (center, points, vel, game) {
+    this.center = center;
     this.points = points;
-    // this.center = center;
     this.vel = vel || [0, 0];
     this.game = game;
     this.wrappable = true;
@@ -68,7 +68,18 @@
   };
 
   Obj.prototype.rotate = function (angle) {
+    this.points = this.points.map(function (point) {
+      var diff = point.minus(this.center);
+      var rad = diff.norm();
 
+      var prevAngle = diff.theta();
+      var nextAngle = prevAngle + angle;
+
+      return [
+        this.center[0] + rad * Math.cos(nextAngle),
+        this.center[1] + rad * Math.sin(nextAngle)
+      ];
+    }.bind(this));
   };
 
   Obj.prototype.wrap = function () {
@@ -87,7 +98,7 @@
 
   Obj.prototype.prewrap = function () {
     var bounds = this.game.size();
-    var newObj = new Obj(this.points, this.vel, this.game);
+    var newObj = new Obj(this.center, this.points, this.vel, this.game);
 
     if (this.left() < 0) {
       newObj.shift([bounds[0], 0]);
