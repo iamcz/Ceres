@@ -15,6 +15,8 @@
   Asteroid.prototype.fill = Asteroid.FILL;
   Asteroid.prototype.stroke = Asteroid.STROKE;
 
+  Asteroid.prototype.type = "asteroid";
+
   Asteroid.Random = function (bounds, radius, game) {
     var center = [
       Math.random() * bounds[0],

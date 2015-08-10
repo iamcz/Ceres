@@ -56,7 +56,5 @@
     
     if (obj.fill) ctx.fill();
     if (obj.stroke) ctx.stroke();
-  }
-
-
+  };
 })();
