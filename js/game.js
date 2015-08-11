@@ -7,6 +7,7 @@
     this.view = new Ceres.View(canvas);
     this.asteroids = [];
 
+    this.addListeners();
     this.setupAsteroids();
     this.spawnShip();
     this.start();
@@ -14,25 +15,25 @@
 
   Game.prototype.addListeners = function () {
     this.keys = {
-      "32": false,
-      "37": false,
-      "38": false,
-      "39": false
+      "32": false, // Space
+      "37": false, // Left
+      "38": false, // Up
+      "39": false  // Right
     };
 
     document.addEventListener("keydown", function (e) {
-      if (this.keys[e.keyCode] !== undefined) {
+      if (typeof this.keys[e.keyCode] !== "undefined") {
         e.preventDefault();
         this.keys[e.keyCode] = true;
       }
-    });
+    }.bind(this));
 
     document.addEventListener("keyup", function (e) {
-      if (this.keys[e.keyCode] !== undefined) {
+      if (typeof this.keys[e.keyCode] !== "undefined") {
         e.preventDefault();
         this.keys[e.keyCode] = false;
       }
-    });
+    }.bind(this));
   };
 
   Game.prototype.size = function () {
@@ -58,7 +59,33 @@
       this.renderAll();
       this.checkCollisions();
       this.moveAll();
+      
+      this.getInput();
     }.bind(this), 1000 / 60);
+  };
+
+  Game.prototype.getInput = function () {
+    for (var key in this.keys) {
+      if (this.keys[key] && !(key in {})) { 
+        switch (key) {
+          case "32": 
+            this.ship.shoot();
+            continue;
+          case "37":
+            this.ship.rotateClockwise();
+            continue;
+          case "38":
+            this.ship.propel();
+            continue;
+          case "39":
+            this.ship.rotateCounterClockwise();
+            continue;
+          default:
+            console.log("Something went wrong!");
+        }
+
+      }
+    }
   };
 
   Game.prototype.renderAll = function () {
@@ -93,7 +120,6 @@
   };
 
   Game.prototype.handleCollision = function (obj, otherObj) {
-    console.log("handleCollision");
     if (obj.type === "ship" && otherObj.type === "asteroid" || 
         obj.type === "asteroid" && otherObj.type === "ship") {
       this.shipHitByAsteroid();

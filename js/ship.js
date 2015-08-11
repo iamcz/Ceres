@@ -20,6 +20,7 @@
     });
     var vel = [0, 0];
 
+    this.dir = -Math.PI / 2;
     Ceres.Obj.call(this, center, points, vel, game);
   };
 
@@ -33,11 +34,19 @@
   
   Ship.prototype.type = "ship";
 
-  Ship.prototype.rotateRight = function () {
-
+  Ship.prototype.rotateClockwise = function () {
+    console.log("rotateClockwise");
   };
 
-  Ship.prototype.rotateLeft = function () {
+  Ship.prototype.rotateCounterClockwise = function () {
+    console.log("rotateCounterClockwise");
+  };
 
+  Ship.prototype.propel = function () {
+    console.log("propel");
+  };
+
+  Ship.prototype.shoot = function () {
+    console.log("shoot");
   };
 })();
