@@ -69,6 +69,7 @@
   };
 
   Obj.prototype.rotate = function (angle) {
+    this.dir += angle;
     this.points = this.points.map(function (point) {
       var diff = point.minus(this.center);
       var rad = diff.norm();

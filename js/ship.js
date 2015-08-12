@@ -35,12 +35,10 @@
   Ship.prototype.type = "ship";
 
   Ship.prototype.rotateClockwise = function () {
-    this.dir -= D_ANGLE;
     this.rotate(-D_ANGLE);
   };
 
   Ship.prototype.rotateCounterClockwise = function () {
-    this.dir += D_ANGLE;
     this.rotate(D_ANGLE);
   };
 
