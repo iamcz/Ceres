@@ -62,6 +62,7 @@
   };
 
   Obj.prototype.shift = function (diff) {
+    this.center = this.center.plus(diff);
     this.points = this.points.map( function (point) {
       return point.plus(diff);
     }.bind(this));

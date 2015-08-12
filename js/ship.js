@@ -5,7 +5,8 @@
 
   var RADIUS = 15;
   var ANGLES = [-Math.PI / 2, 2 * Math.PI / 6, 4 * Math.PI / 6];
-  var D_ANGLE = Math.PI / 18;
+  var D_ANGLE = Math.PI / 90;
+  var D_VEL = 0.1;
 
   var Ship = Ceres.Ship = function (game) {
     var bounds = game.size();
@@ -30,20 +31,21 @@
 
   Ship.inheritsFrom(Ceres.Obj);
   Ship.prototype.fill = Ship.FILL;
-  // Ship.prototype.stroke = Ship.STROKE;
   
   Ship.prototype.type = "ship";
 
   Ship.prototype.rotateClockwise = function () {
-    console.log("rotateClockwise");
+    this.dir -= D_ANGLE;
+    this.rotate(-D_ANGLE);
   };
 
   Ship.prototype.rotateCounterClockwise = function () {
-    console.log("rotateCounterClockwise");
+    this.dir += D_ANGLE;
+    this.rotate(D_ANGLE);
   };
 
   Ship.prototype.propel = function () {
-    console.log("propel");
+    this.vel = this.vel.plus([D_VEL * Math.cos(this.dir), D_VEL * Math.sin(this.dir)]);
   };
 
   Ship.prototype.shoot = function () {
