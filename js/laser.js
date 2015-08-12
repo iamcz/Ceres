@@ -4,9 +4,15 @@
   }
 
   var PI = Math.PI;
-  var D_ANG = PI / 6;
+  var D_ANG = PI / 2;
   var ANGLES = [D_ANG, PI - D_ANG, PI + D_ANG, 2 * PI - D_ANG];
-  var RAD = 5
+  var POINTS = [
+    [1, 1],
+    [-1, 1],
+    [-1, -1],
+    [1, -1],
+  ];
+  var RAD = 5;
   var MAX_VEL = 6;
 
   var Laser = Ceres.Laser = function (ship) {
@@ -17,6 +23,7 @@
       ship.radius * Math.sin(dir)
     ]);
 
+
     var points = ANGLES.map(function (angle) {
       return [
         center[0] + RAD * Math.cos(dir + angle),
@@ -24,9 +31,13 @@
       ];
     });
 
+    var points = POINTS.map(function (point) {
+      return center.plus(point);
+    })
+
     var vel = [MAX_VEL * Math.cos(dir), MAX_VEL * Math.sin(dir)]
 
-    Ceres.Obj.call(this, center, points, vel, game)
+    Ceres.Obj.call(this, center, points, vel, game);
     this.wrappable = false;
   }
 
