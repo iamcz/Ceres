@@ -46,7 +46,9 @@
     var bounds = this.view.getSize();
 
     for (i = 0; i < 15; i += 1) {
-      this.asteroids.push(Ceres.Asteroid.Random(bounds, 25, this));
+      this.asteroids.push(
+        Ceres.Asteroid.Random(bounds, 25, this)
+      );
     }
   };
 
@@ -60,6 +62,7 @@
       this.renderAll();
       this.checkCollisions();
       this.moveAll();
+      this.filterOutOfRange();
       
       this.getInput();
     }.bind(this), 1000 / 60);
@@ -120,10 +123,12 @@
   };
 
   Game.prototype.handleCollision = function (obj, otherObj) {
-    if (obj.type === "ship" && otherObj.type === "asteroid" || 
-        obj.type === "asteroid" && otherObj.type === "ship") {
+    if (obj.type === "asteroid" && otherObj.type === "ship") {
       this.shipHitByAsteroid();
-    } 
+    } else if (obj.type === "asteroid" && otherObj.type === "laser") {
+      console.log("laser hit asteroid");
+    } else {
+    }
   };
 
   Game.prototype.shipHitByAsteroid = function () {
@@ -134,5 +139,11 @@
     return this.asteroids
       .concat(this.ship)
       .concat(this.lasers);
+  };
+
+  Game.prototype.filterOutOfRange = function () {
+    this.lasers = this.lasers.filter(function (laser) {
+      return !laser.outOfRange();
+    });
   };
 })();

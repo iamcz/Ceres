@@ -3,8 +3,11 @@
     window.Ceres = {};
   }
 
-  var Asteroid = Ceres.Asteroid = function (center, points, vel, game) {
+  var RADII = [25, 20, 10];
+
+  var Asteroid = Ceres.Asteroid = function (center, radius, points, vel, game) {
     Ceres.Obj.call(this, center, points, vel, game);
+    this.radius = radius;
   };
 
   Asteroid.MAX_SPEED = 5;
@@ -25,6 +28,7 @@
 
     return new Asteroid(
       center,
+      radius,
       Ceres.Obj.randomPoints(
         center[0],
         center[1],
@@ -48,6 +52,17 @@
     return [
       speed * Math.cos(theta),
       speed * Math.sin(theta)
+    ];
+  }
+
+  Asteroid.prototype.split = function () {
+    if (this.radius < 10) return;
+    
+    var newRadius = RADII[RADII.indexOf(this.radius) + 1];
+    
+    return [
+      Asteroid.Random(this.game.size(), newRadius, this.game),
+      Asteroid.Random(this.game.size(), newRadius, this.game)
     ];
   }
 })();

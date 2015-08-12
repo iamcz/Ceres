@@ -6,12 +6,7 @@
   var PI = Math.PI;
   var D_ANG = PI / 2;
   var ANGLES = [D_ANG, PI - D_ANG, PI + D_ANG, 2 * PI - D_ANG];
-  var POINTS = [
-    [1, 1],
-    [-1, 1],
-    [-1, -1],
-    [1, -1],
-  ];
+  var POINTS = [ [5, 1], [-5, 1], [-5, -1], [5, -1] ];
   var RAD = 5;
   var MAX_VEL = 6;
 
@@ -22,7 +17,6 @@
       ship.radius * Math.cos(dir), 
       ship.radius * Math.sin(dir)
     ]);
-
 
     var points = ANGLES.map(function (angle) {
       return [
@@ -39,6 +33,7 @@
 
     Ceres.Obj.call(this, center, points, vel, game);
     this.wrappable = false;
+    this.rotate(dir)
   }
 
   Laser.FILL = "#F00";

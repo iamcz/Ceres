@@ -63,6 +63,7 @@
 
   Obj.prototype.shift = function (diff) {
     this.center = this.center.plus(diff);
+
     this.points = this.points.map( function (point) {
       return point.plus(diff);
     }.bind(this));
@@ -116,6 +117,22 @@
 
     return newObj;
   };
+
+  Obj.prototype.outOfRange = function () {
+    var bounds = this.game.size();
+
+    if (this.right() < 0) {
+      return true;
+    } else if (this.left() > bounds[0]) {
+      return true;
+    } else if (this.top() < 0) {
+      return true;
+    } else if (this.bottom() > bounds[1]) {
+      return true;
+    }
+
+    return false;
+  }
 
   Obj.prototype.axes = function (otherObj) {
     var points = this.points;
