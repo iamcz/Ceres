@@ -11,8 +11,9 @@
   var Ship = Ceres.Ship = function (game) {
     var bounds = game.size();
     var center = bounds.map(function (bound) { return  bound / 2; });
-    var xC = center[0], yC = center[1]
+    var xC = center[0], yC = center[1];
 
+    this.radius = RADIUS;
     var points = ANGLES.map(function (angle) {
       return [
         xC + RADIUS * Math.cos(angle),
@@ -22,6 +23,7 @@
     var vel = [0, 0];
 
     this.dir = -Math.PI / 2;
+    this.canShoot = true;
     Ceres.Obj.call(this, center, points, vel, game);
   };
 
@@ -47,6 +49,12 @@
   };
 
   Ship.prototype.shoot = function () {
-    console.log("shoot");
+    if (this.canShoot) {
+      this.game.lasers.push(new Ceres.Laser(this));
+      this.canShoot = false;
+      setTimeout(function () {
+        this.canShoot = true;
+      }.bind(this), 200);
+    }
   };
 })();

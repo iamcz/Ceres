@@ -6,6 +6,7 @@
   var Game = Ceres.Game = function (canvas) {
     this.view = new Ceres.View(canvas);
     this.asteroids = [];
+    this.lasers = [];
 
     this.addListeners();
     this.setupAsteroids();
@@ -83,7 +84,6 @@
           default:
             console.log("Something went wrong!");
         }
-
       }
     }
   };
@@ -131,6 +131,8 @@
   }
 
   Game.prototype.allObjects = function () {
-    return this.asteroids.concat(this.ship);
+    return this.asteroids
+      .concat(this.ship)
+      .concat(this.lasers);
   };
 })();
