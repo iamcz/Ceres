@@ -25,13 +25,12 @@
     if (typeof this.branches === "undefined") this.split();
     
     var i, branch, branches = this.branches;
-    for (i = 0; i < branches.length; i += 1) {
-      branch = branches[i];
+    this.branches.forEach(function (branch) {
       if (branch.canContain(obj)) {
         branch.add(obj);
         return;
       }
-    }
+    });
 
     this.objects.push(obj);
   };
