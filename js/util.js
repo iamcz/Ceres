@@ -71,6 +71,13 @@
     }.bind(this));
   };
 
+  Array.prototype.remove = function (el) {
+    var idx = this.indexOf(el);
+    if (idx === -1) return;
+
+    this.splice(idx, 1);
+  };
+
   Object.prototype.inheritsFrom = function (parentObject) {
     var Surrogate = function () {};
     Surrogate.prototype = parentObject.prototype;

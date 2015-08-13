@@ -51,16 +51,7 @@
 
       children.push(new Asteroid(center, radius, points, vel, parent.game));
     }
-    
-    // return [
-    //   Asteroid.Random(this.game.size(), radius, this.game),
-    //   Asteroid.Random(this.game.size(), radius, this.game)
-    // ];
   };
-
-  // Asteroid.numPointsFor = function (rad) {
-  //   return 10;
-  // };
 
   Asteroid.velFor = function (rad) {
     var speed = Math.random() * Asteroid.MAX_SPEED;

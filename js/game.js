@@ -126,14 +126,20 @@
     if (obj.type === "asteroid" && otherObj.type === "ship") {
       this.shipHitByAsteroid();
     } else if (obj.type === "asteroid" && otherObj.type === "laser") {
-      console.log("laser hit asteroid");
+      console.log("laser hits asteroid!");
+      this.laserHitsAsteroid(otherObj, obj);
     } else {
     }
   };
 
   Game.prototype.shipHitByAsteroid = function () {
     this.spawnShip();
-  }
+  };
+
+  Game.prototype.laserHitsAsteroid = function (laser, asteroid) {
+    this.lasers.remove(laser);
+    this.asteroids.remove(asteroid);
+  };
 
   Game.prototype.allObjects = function () {
     return this.asteroids
