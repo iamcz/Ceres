@@ -10,26 +10,26 @@
   var MAX_VEL = 6;
 
   var Laser = Ceres.Laser = function (ship) {
-    var dir = ship.dir, game = ship.game, center, points, vel;
+    var dir = ship.dir, center, points, vel;
 
     center = Laser.calculateCenter(ship);
     points = Laser.calculatePoints(center);
     vel = [MAX_VEL * Math.cos(dir), MAX_VEL * Math.sin(dir)];
 
-    Ceres.Obj.call(this, center, points, vel, game);
-
+    Ceres.Obj.call(this, center, points, vel, ship.game);
+  
     this.wrappable = false;
-    this.rotate(dir);
+    this.rotate(dir); // Render laser in correct direction
   };
 
   Laser.calculateCenter = function (ship) {
     return ship.center.plus([
-      ship.radius * Math.cos(dir), 
-      ship.radius * Math.sin(dir)
+      ship.radius * Math.cos(ship.dir), 
+      ship.radius * Math.sin(ship.dir)
     ]);
   };
 
-  Laser.calculatePoints = function (ship) {
+  Laser.calculatePoints = function (center) {
     return POINTS.map(function (point) {
       return center.plus(point);
     });

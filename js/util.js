@@ -61,6 +61,16 @@
     return Math.max.apply(null, this);
   };
 
+  Array.prototype.sampleWithinBounds = function () {
+    var diff;
+
+    return this[0].map(function (min, idx) {
+      diff = this[1][idx] - min;
+
+      return min + Math.random() * diff;
+    }.bind(this));
+  };
+
   Object.prototype.inheritsFrom = function (parentObject) {
     var Surrogate = function () {};
     Surrogate.prototype = parentObject.prototype;

@@ -11,8 +11,9 @@
     this.wrappable = true;
   };
 
-  Obj.randomPoints = function (xCenter, yCenter, r, n) {
+  Obj.randomPoints = function (center, r, n) {
     var dTheta = 2 * Math.PI / n, 
+        xCenter = center[0], yCenter = center[1],
         minTheta = 0,
         dRad = 0.1,
         rad, theta, x, y,
@@ -170,10 +171,10 @@
 
       if (!thisProj.overlaps(otherProj)) {
         return false; 
-      } else {
-        
-      }
+      } 
     }
+
     return true;
   };
+
 })();
