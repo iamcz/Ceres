@@ -37,6 +37,7 @@
   Asteroid.Children = function (parent) {
     var points, center, vel;
     var radius = RADII[RADII.indexOf(parent.radius) + 1];
+    if (typeof radius === "undefined") return [];
 
     var bounds = [
       [parent.left(), parent.bottom()],
