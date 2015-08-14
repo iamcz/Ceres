@@ -37,7 +37,10 @@
   };
 
   Array.prototype.overlaps = function(interval) {
-    return this.contains(interval[0]) || this.contains(interval[1]);
+    return this.contains(interval[0]) || 
+           this.contains(interval[1]) ||
+           interval.contains(this[0]) ||
+           interval.contains(this[1]);
   };
 
   Array.prototype.overlap = function(interval) {
@@ -50,7 +53,7 @@
   };
 
   Array.prototype.contains = function (point) {
-    return (this[0] < point && point < this[1]);
+    return (this[0] <= point && point <= this[1]);
   };
 
   Array.prototype.min = function () {
@@ -76,6 +79,10 @@
     if (idx === -1) return;
 
     this.splice(idx, 1);
+  };
+
+  Array.prototype.clone = function () {
+    return this.slice(0);
   };
 
   Object.prototype.inheritsFrom = function (parentObject) {

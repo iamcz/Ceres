@@ -36,7 +36,7 @@
 
   Asteroid.Children = function (parent) {
     var points, center, vel;
-    var radius = RADII[RADII.indexOf(this.radius) + 1];
+    var radius = RADII[RADII.indexOf(parent.radius) + 1];
 
     var bounds = [
       [parent.left(), parent.bottom()],
@@ -51,29 +51,10 @@
 
       children.push(new Asteroid(center, radius, points, vel, parent.game));
     }
+
+    return children;
   };
 
-  randomPointsForAsteroid = function (center, r, n) {
-    var dTheta = 2 * Math.PI / n, 
-        xCenter = center[0], yCenter = center[1],
-        minTheta = 0,
-        dRad = 0.2,
-        rad, theta, x, y,
-        points = [];
-
-    while (points.length < n) {
-      theta = minTheta + Math.random() * dTheta;
-      rad = r * (1 - dRad) + Math.random() * r * dRad * 2;
-      x = xCenter + rad * Math.cos(theta);
-      y = yCenter + rad * Math.sin(theta);
-
-      points.push([x, y]);
-
-      minTheta = points.length * 2 * Math.PI / n;
-    }
-
-    return points;
-  };
 
   Asteroid.velFor = function (rad) {
     var speed = Math.random() * Asteroid.MAX_SPEED;
@@ -88,5 +69,28 @@
   Asteroid.prototype.split = function () {
     if (this.radius < 10) return;
     
-  }
+  };
+
+  randomPointsForAsteroid = function (center, r, n) {
+    var dTheta = 2 * Math.PI / n, 
+        xCenter = center[0], yCenter = center[1],
+        minTheta = 0,
+        dRad = 0.2,
+        rad, theta, x, y,
+        points = [];
+
+    while (points.length < n) {
+      theta = minTheta + Math.random() * dTheta;
+      // rad = r * (1 - dRad) + Math.random() * r * dRad * 2;
+      rad = r;
+      x = xCenter + rad * Math.cos(theta);
+      y = yCenter + rad * Math.sin(theta);
+
+      points.push([x, y]);
+
+      minTheta = points.length * 2 * Math.PI / n;
+    }
+
+    return points;
+  };
 })();

@@ -115,14 +115,15 @@
 
   Obj.prototype.axes = function (otherObj) {
     var points = this.points;
-    var pointIdx, fromPoint, toPoint, slope;
+    var pointIdx, fromPoint, toPoint, dx, dy;
     var axes = [];
 
     for (pointIdx = 0; pointIdx < points.length; pointIdx += 1) {
       fromPoint = points[pointIdx];
       toPoint = points[(pointIdx + 1) % points.length];
-      slope = (toPoint[1] - fromPoint[1]) / (toPoint[0] - fromPoint[0]);
-      axes.push([-slope, 1]);
+      dx = toPoint[0] - fromPoint[0];
+      dy = toPoint[1] - fromPoint[1];
+      axes.push([-dy, dx]);
     }
 
     return axes;
@@ -139,17 +140,11 @@
   Obj.prototype.collidesWith = function (otherObj) {
     if (otherObj === this) return false;
 
-    var axes = this.axes().concat(otherObj.axes());
-    var i, axis, thisProj, otherProj;
-
+    var axes = this.axes().concat(otherObj.axes()), i;
     for (i = 0; i < axes.length; i += 1) {
-      axis = axes[i];
-      thisProj = this.proj(axis);
-      otherProj = otherObj.proj(axis);
-
-      if (!thisProj.overlaps(otherProj)) {
+      if (!this.proj(axes[i]).overlaps(otherObj.proj(axes[i]))) {
         return false; 
-      } 
+      }
     }
 
     return true;

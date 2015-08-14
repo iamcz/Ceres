@@ -101,32 +101,47 @@
   };
 
   Game.prototype.doToAll = function (callback) {
-    this.allObjects().forEach( function (obj) {
+    this.allObjects().clone().forEach( function (obj) {
       callback(obj);
     });
   };
 
   Game.prototype.checkCollisions = function () {
-    var size = this.size();
     var game = this;
-    var quadTree = new Ceres.QuadTree(0, 0, size[0], size[1]);
-    this.doToAll(quadTree.add.bind(quadTree));
-    this.doToAll( function (obj) {
-      var neighbors = quadTree.findNeighbors(obj);
+    var ship = this.ship;
+    var asteroidTree = this.asteroidTree();
+    
+    var shipNeighbors = asteroidTree.findNeighbors(this.ship);
 
-      neighbors.forEach( function (neighbor) {
-        if (obj !== neighbor && obj.collidesWith(neighbor)) {
-          game.handleCollision(obj, neighbor);
-        }
+    shipNeighbors.forEach(function (asteroid) {
+      if (ship.collidesWith(asteroid)) game.handleCollision(asteroid, ship);
+    });
+
+    var laserNeighbors;
+    this.lasers.forEach(function (laser) {
+      laserNeighbors = asteroidTree.findNeighbors(laser);
+
+      laserNeighbors.forEach(function (asteroid) {
+        if (laser.collidesWith(asteroid)) game.handleCollision(asteroid, laser);
       });
     });
   };
+
+  Game.prototype.asteroidTree = function () {
+    var bounds = this.size();
+    var quadTree = new Ceres.QuadTree(0, 0, bounds[0], bounds[1]);
+
+    this.asteroids.forEach(function (asteroid) {
+      quadTree.add(asteroid);
+    });
+
+    return quadTree;
+  }
 
   Game.prototype.handleCollision = function (obj, otherObj) {
     if (obj.type === "asteroid" && otherObj.type === "ship") {
       this.shipHitByAsteroid();
     } else if (obj.type === "asteroid" && otherObj.type === "laser") {
-      console.log("laser hits asteroid!");
       this.laserHitsAsteroid(otherObj, obj);
     } else {
     }
@@ -139,6 +154,11 @@
   Game.prototype.laserHitsAsteroid = function (laser, asteroid) {
     this.lasers.remove(laser);
     this.asteroids.remove(asteroid);
+    var childAsteroids = Ceres.Asteroid.Children(asteroid);
+
+    childAsteroids.forEach(function (child) {
+      this.asteroids.push(child);
+    }.bind(this));
   };
 
   Game.prototype.allObjects = function () {
