@@ -49,10 +49,13 @@
 
   QuadTree.prototype.findNeighbors = function (obj) {
     var i, objects;
+
     if (this.hasBranches()) {
       for (i = 0; i < this.branches.length; i += 1) {
         branch = this.branches[i];
-        if (branch.canContain(obj)) return branch.findNeighbors(obj);
+        if (branch.canContain(obj)) {
+          return this.objects.concat(branch.findNeighbors(obj));
+        }
       }
     }
     
