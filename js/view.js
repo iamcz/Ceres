@@ -37,6 +37,15 @@
     }
   };
 
+  View.prototype.renderHUD = function (livesLeft, score) {
+    var ctx = this.canvas.getContext('2d');
+
+    ctx.font = "36px sans-serif";
+    ctx.fillStyle = "#000";
+    ctx.fillText("Lives: " + livesLeft, 0, 36);
+    ctx.fillText("Score: " + score, 200, 36);
+  };
+
   View.prototype.draw = function (obj) {
     if (obj.fill === undefined) {
       debugger;

@@ -9,6 +9,8 @@
     this.lasers = [];
 
     this.numAsteroids = 3;
+    this.livesLeft = 3;
+    this.score = 0;
     this.addListeners();
     this.setupAsteroids();
     this.spawnShip();
@@ -69,6 +71,7 @@
 
     this.moveAll();
     this.filterOutOfRange();
+    this.renderHUD();
     
     this.getInput();
     
@@ -82,6 +85,10 @@
   Game.prototype.levelUp = function () {
     this.numAsteroids += 1;
     this.setupAsteroids();
+  };
+
+  Game.prototype.over = function () {
+    return this.livesLeft <= 0;
   };
 
   Game.prototype.getInput = function () {
@@ -110,6 +117,10 @@
   Game.prototype.renderAll = function () {
     this.view.clear();
     this.doToAll(this.view.render.bind(this.view));
+  };
+
+  Game.prototype.renderHUD = function () {
+    this.view.renderHUD(this.livesLeft, this.score);
   };
 
   Game.prototype.moveAll = function () {
@@ -164,10 +175,12 @@
   };
 
   Game.prototype.shipHitByAsteroid = function () {
+    this.livesLeft -= 1;
     this.spawnShip();
   };
 
   Game.prototype.laserHitsAsteroid = function (laser, asteroid) {
+    this.score += asteroid.radius;
     this.lasers.remove(laser);
     this.asteroids.remove(asteroid);
     var childAsteroids = Ceres.Asteroid.Children(asteroid);
