@@ -24,6 +24,8 @@
 
     this.dir = -Math.PI / 2;
     this.canShoot = true;
+    this.invincible = true;
+    setTimeout(function () { this.invincible = false; }.bind(this), 3000);
     Ceres.Obj.call(this, center, points, vel, game);
   };
 
@@ -33,7 +35,7 @@
 
   Ship.inheritsFrom(Ceres.Obj);
   Ship.prototype.fill = Ship.FILL;
-  
+
   Ship.prototype.type = "ship";
 
   Ship.prototype.rotateClockwise = function () {

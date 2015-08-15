@@ -140,9 +140,11 @@
     
     var shipNeighbors = asteroidTree.findNeighbors(this.ship);
 
-    shipNeighbors.forEach(function (asteroid) {
-      if (ship.collidesWith(asteroid)) game.handleCollision(asteroid, ship);
-    });
+    if (!ship.invincible) {
+      shipNeighbors.forEach(function (asteroid) {
+        if (ship.collidesWith(asteroid)) game.handleCollision(asteroid, ship);
+      });
+    }
 
     var laserNeighbors;
     this.lasers.forEach(function (laser) {
